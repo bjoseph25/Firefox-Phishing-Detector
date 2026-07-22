@@ -46,17 +46,15 @@ browser.storage.local.get("lastScan")
     const list =
     document.getElementById("reasons");
 
-    scan.reason.forEach(reason => {
-
-        const item =
-        document.createElement("li");
-
-        item.textContent =
-        reason;
-
-        list.appendChild(item);
-
-    });
+    if (Array.isArray(scan.reasons)) {
+        // Safety check
+        scan.reasons.forEach(reason => {
+            const item = document.createElement("li");
+            item.textContent = reason;
+            list.appendChild(item);
+        });
+    
+    }
 
 });
 

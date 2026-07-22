@@ -55,5 +55,64 @@ export function checkUrl(urlInfo) {
         }
     }
 
+    // IP Address check
+    const ipRegex = 
+        /^(\d{1,3}\.){3}\d{1,3}$/;
+
+    if (ipRegex.test(urlInfo.hostname)) {
+
+        addRisk(
+            result,
+            30,
+            "URL uses an IP address"
+        );
+    }
+
+    // Count subdomains
+    const parts =
+        urlInfo.hostname.split(".");
+
+    if (parts.length > 3) {
+
+        addRisk(
+            result,
+            15,
+            "Excessive subdomains"
+        );
+    }
+
+    // Count hyphens
+    const hyphenCount =
+        (urlInfo.hostname.match(/-/g)) || [].length;
+
+    if (hyphenCount >= 2) {
+
+        addRisk(
+            result,
+            10,
+            "Multiple hyphens is domain"
+        );
+    }
+
+    // Check uncommon TLDs
+    const suspiciousTlds = [
+        ".zip",
+        ".click",
+        ".top",
+        ".xyz"
+    ];
+
+    for (const tld of suspiciousTlds) {
+
+        if (urlInfo.hostname.endsWith(tld)) {
+
+            addRisk(
+                result,
+                15,
+                `Suspicious TLD: ${tld}`
+            );
+        }
+    }
+
     return result
 }
