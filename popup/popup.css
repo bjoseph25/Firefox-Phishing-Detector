@@ -1,9 +1,19 @@
-.body {
-    width: 250px;
+body {
+    width: 300px;
     font-family: Arial, sans-serif;
     padding: 15px;
 }
 
-.h2 {
+h2 {
     color: #2b6cb0;
+}
+
+#score {
+
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#status {
+    font-size: 18px;
 }

@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <title>Phishing Detector</title>
     <link rel="stylesheet" href="popup.css">
 </head>
@@ -9,13 +10,42 @@
 <body>
 
 <h2>
- Phishing Detector   
+ 🛡 Phishing Detector   
 </h2>
 
-<p id="status">
-Extension active
+<p>
+Site:
 </p>
 
+<div id="site">
+Loading...
+</div>
+
+<p>
+Risk Score:
+</p>
+
+<div id="score">
+Loading...
+</div>
+
+<p>
+Status:
+</p>
+
+<div id="status">
+Loading...
+</div>
+
+<p>
+Reasons:
+</p>
+
+<ul id="reasons">   
+</ul>
+
 <script src="popup.js"></script>
+
 </body>
+
 </html>

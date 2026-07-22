@@ -34,6 +34,17 @@ browser.tabs.onUpdated.addListener(
                     "Reasons:",
                     result.reasons
                 );
+
+
+                browser.storage.local.set({
+
+                    lastScan: {
+                        url: urlInfo.fullUrl,
+                        hostname: urlInfo.hostname,
+                        score: result.score,
+                        reasons: result.reasons
+                    }
+                });
             }
         }
     }
