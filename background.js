@@ -1,5 +1,17 @@
 import { analyzeUrl } from "./utils/urlAnalysis.js";
 import { checkUrl } from "./utils/heuristics.js";
+// Temp 
+import { detectTyposquatting } from "./utils/typosquatting.js";
+
+globalThis.detectTyposquatting = detectTyposquatting;
+
+console.log(
+    detectTyposquatting("g00gle.com")
+);
+
+console.log(
+    detectTyposquatting("paypal.com")
+);
 
 console.log("Phishing Detector started");
 
