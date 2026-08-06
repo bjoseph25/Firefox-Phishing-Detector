@@ -17,21 +17,15 @@ const suspiciousKeywords = [
     "unlock"
 ];
 
+const urlAnalysis = analyzeUrl(currentUrl);
+
+const risk = calculateRiskScore(urlAnalysis);
+
 console.log("Current URL:", currentUrl);
 
-console.log(detectAtSymbol(currentUrl));
+console.log(urlAnalysis);
 
-console.log(detectEncodedCharacters(currentUrl));
-
-console.log(detectLongUrl(currentUrl));
-
-console.log(detectRepeatedSlashes(currentUrl));
-
-console.log(analyzeHostname(currentUrl));
-
-console.log(countSubdomains(hostnameData.hostname));
-
-console.log(detectSuspiciousKeywords(currentUrl));
+console.log(risk);
 
 console.log("CONTENT SCRIPT RUNNING")
 
@@ -104,5 +98,50 @@ function detectSuspiciousKeywords(url) {
     return {
         foundKeywords: foundKeywords,
         keywordCount: foundKeywords.length
+    };
+}
+
+function analyzeUrl(url) {
+    const hostnameData = analyzeHostname(url);
+
+    return {
+        url: url,
+        ...detectAtSymbol(url),
+        ...detectEncodedCharacters(url),
+        ...detectLongUrl(url),
+        ...detectRepeatedSlashes(url),
+        ...hostnameData,
+        ...countSubdomains(hostnameData.hostname),
+        ...detectSuspiciousKeywords(url)
+    };
+}
+
+function calculateRiskScore(urlAnalysis) {
+    let score = 0;
+    const reasons = [];
+
+    if (urlAnalysis.hasAtSymbol) {
+        score += 25;
+        reasons.push("URL contains @ symbol");
+    }
+
+    if (urlAnalysis.encodedCharacterCount > 5) {
+        score +=20;
+        reasons.push("URL contains excessive encoded chararcters");
+    }
+
+    if (urlAnalysis.isLongUrl) {
+        score +=15;
+        reasons.push("URL is unusually long");
+    }
+
+    if (urlAnalysis.hasRepeatedSlashes) {
+        score += 10;
+        reasons.push("URL contains repeated slashes");
+    }
+
+    return {
+        score,
+        reasons
     };
 }
